@@ -23,4 +23,11 @@ export interface PokemonInfo {
     front_default: string
   };
   weight: number;
+  types: {
+    slot: number;
+    type: {
+      name: string;
+      url: string;
+    }
+  }[];
 }

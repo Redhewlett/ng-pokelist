@@ -1,0 +1,13 @@
+@if(pokemon){
+<div class="card">
+  <img [src]="pokemon.sprites.front_default" class="card-img-top" alt="..." />
+  <div class="card-body">
+    <h5 class="card-title">{{ pokemon.name }}</h5>
+    <p class="card-text">{{ pokemon.weight }}kg</p>
+    <p class="card-text">{{ pokemon.height }}m</p>
+    @for(type of pokemon.types; track type.slot){
+      <p class="card-text types">{{ type.type.name }}</p>
+    }
+  </div>
+</div>
+}
