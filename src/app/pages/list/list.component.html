@@ -1,4 +1,2 @@
-<app-pokemon-list></app-pokemon-list>
-<div>
-  {{ this.pokemonService.pokemonResources$ | async| json}}
-</div>
+<app-pokemon-list [pokemonResources]="this.pokemonService.pokemonResources$ | async"></app-pokemon-list>
+{{ this.pokemonService.pokemonWithInfo$ | async | json}}
