@@ -37,4 +37,8 @@ export class PokemonService {
   public getNextPokemonPage(url: string): Observable<PokemonRessources> {
     return this.http.get<PokemonRessources>(url);
   }
+
+  public getPokemonInfo(number:number): Observable<PokemonInfo> {
+    return this.http.get<PokemonInfo>(`https://pokeapi.co/api/v2/pokemon/${number}`);
+  }
 }
