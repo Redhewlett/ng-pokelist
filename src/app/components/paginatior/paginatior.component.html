@@ -1,1 +1,6 @@
-<p>paginatior works!</p>
+<mat-paginator
+  [length]="totalPokemons$ | async"
+  [pageSize]="20"
+  (page)='onPageChange($event)'
+>
+</mat-paginator>

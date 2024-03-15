@@ -34,11 +34,28 @@ export class PokemonService {
     );
   }
 
-  public getNextPokemonPage(url: string): Observable<PokemonRessources> {
-    return this.http.get<PokemonRessources>(url);
+  public getPokemonInfo(number: number): Observable<PokemonInfo> {
+    return this.http.get<PokemonInfo>(
+      `https://pokeapi.co/api/v2/pokemon/${number}`
+    );
   }
-
-  public getPokemonInfo(number:number): Observable<PokemonInfo> {
-    return this.http.get<PokemonInfo>(`https://pokeapi.co/api/v2/pokemon/${number}`);
+  public updatePokemonResources(url: string): void {
+    this.pokemonResources$ = this.http
+      .get<PokemonRessources>(url)
+      .pipe(shareReplay(1));
+    this.pokemonWithInfo$ = this.pokemonResources$.pipe(
+      mergeMap((res) => res.results),
+      mergeMap((pokemon) => this.http.get<PokemonInfo>(pokemon.url)),
+      map(
+        (pokemonData: PokemonInfo): PokemonBaseInfo => ({
+          name: pokemonData.name,
+          id: pokemonData.id,
+          weight: pokemonData.weight,
+          sprites: pokemonData.sprites,
+          // map other properties as needed
+        })
+      ),
+      toArray()
+    );
   }
 }
