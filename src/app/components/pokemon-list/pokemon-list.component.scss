@@ -1,0 +1,22 @@
+ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 1rem;
+  & li {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid lightblue;
+    border-radius: 5px;
+  }
+}
+.pokemonName{
+  font-size: 1.5rem;
+  font-weight: 500;
+}

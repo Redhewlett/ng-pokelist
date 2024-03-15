@@ -1,0 +1,10 @@
+<ul>
+  @for(pokemon of pokemonWithInfo; track pokemon.id){
+  <li>
+    <span class="pokemonName">{{ pokemon.name }}</span>
+    <span>
+      <img [src]="pokemon.sprites.front_default" [alt]="pokemon.name" />
+    </span>
+  </li>
+  }
+</ul>

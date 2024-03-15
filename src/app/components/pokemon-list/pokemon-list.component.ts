@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { PokemonRessource, PokemonRessources } from '../../interfaces/pokemon-ressources';
 import { CommonModule } from '@angular/common';
+import { PokemonBaseInfo } from '../../interfaces/pokemon';
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
@@ -9,6 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './pokemon-list.component.scss'
 })
 export class PokemonListComponent {
-  @Input() pokemonResources: PokemonRessources | null = null;
-
+  @Input() pokemonWithInfo: PokemonBaseInfo[] | null = null;
 }
