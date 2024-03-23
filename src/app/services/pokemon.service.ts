@@ -5,6 +5,8 @@ import {
   Observable,
   catchError,
   combineLatest,
+  debounce,
+  debounceTime,
   forkJoin,
   map,
   mergeMap,
@@ -62,7 +64,7 @@ export class PokemonService {
   public filteredPokemonWithInfo$: Observable<PokemonBaseInfo[]> =
     combineLatest([
       this.pokemonFullList$,
-      this.searchControl.valueChanges.pipe(startWith('')),
+      this.searchControl.valueChanges.pipe(startWith(''), debounceTime(300)),
     ]).pipe(
       map(([pokemonList, searchTerm]) => {
         if (!searchTerm) {
