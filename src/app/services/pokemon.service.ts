@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, mergeMap, shareReplay, toArray } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  mergeMap,
+  shareReplay,
+  tap,
+  toArray,
+} from 'rxjs';
 import { PokemonRessources } from '../interfaces/pokemon-ressources';
 import { PokemonInfo, PokemonBaseInfo } from '../interfaces/pokemon';
 
@@ -10,21 +19,32 @@ import { PokemonInfo, PokemonBaseInfo } from '../interfaces/pokemon';
 export class PokemonService {
   public pokemonResources$ = this.getPokemon().pipe(shareReplay(1));
 
+  public isLoading$ = new BehaviorSubject<boolean>(false);
+
   public pokemonWithInfo$: Observable<PokemonBaseInfo[]> =
-    this.pokemonResources$.pipe(
-      mergeMap((res) => res.results),
-      mergeMap((pokemon) => this.http.get<PokemonInfo>(pokemon.url)),
-      map(
-        (pokemonData: PokemonInfo): PokemonBaseInfo => ({
-          name: pokemonData.name,
-          id: pokemonData.id,
-          weight: pokemonData.weight,
-          sprites: pokemonData.sprites,
-          // map other properties as needed
+      this.pokemonResources$.pipe(
+        tap(() => this.isLoading$.next(true)), // set loading to true before the request
+        mergeMap((res) => res.results),
+        mergeMap((pokemon) =>
+          this.http.get<PokemonInfo>(pokemon.url).pipe(
+            map(
+              (pokemonData: PokemonInfo): PokemonBaseInfo => ({
+                name: pokemonData.name,
+                id: pokemonData.id,
+                weight: pokemonData.weight,
+                sprites: pokemonData.sprites,
+                // map other properties as needed
+              })
+            ),
+            tap(() => this.isLoading$.next(false)), // set loading to false after each request
+          )
+        ),
+        toArray(),
+        catchError((error) => {
+          this.isLoading$.next(false); // set loading to false if there is an error
+          throw error;
         })
-      ),
-      toArray()
-    );
+      );
 
   constructor(private http: HttpClient) {}
 
@@ -40,9 +60,15 @@ export class PokemonService {
     );
   }
   public updatePokemonResources(url: string): void {
-    this.pokemonResources$ = this.http
-      .get<PokemonRessources>(url)
-      .pipe(shareReplay(1));
+    this.isLoading$.next(true); // set loading to true before the request
+    this.pokemonResources$ = this.http.get<PokemonRessources>(url).pipe(
+      shareReplay(1),
+      tap(() => this.isLoading$.next(false)), // set loading to false after the request
+      catchError((error) => {
+        this.isLoading$.next(false); // set loading to false if there is an error
+        throw error;
+      })
+    );
     this.pokemonWithInfo$ = this.pokemonResources$.pipe(
       mergeMap((res) => res.results),
       mergeMap((pokemon) => this.http.get<PokemonInfo>(pokemon.url)),

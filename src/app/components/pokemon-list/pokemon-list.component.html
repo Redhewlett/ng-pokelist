@@ -1,11 +1,15 @@
 <ul>
-  @for(pokemon of pokemonWithInfo; track pokemon.id){
-  <li [routerLink]="['/pokemon/',pokemon.id]">
+  @if(isLoading | async){
+  <mat-spinner></mat-spinner>
+  }@else { @for(pokemon of pokemonWithInfo; track pokemon.id){
+
+  <li [routerLink]="['/pokemon/', pokemon.id]">
     <span class="pokemonName">{{ pokemon.name }}</span>
     <span>
       <img [src]="pokemon.sprites.front_default" [alt]="pokemon.name" />
     </span>
   </li>
-  }
+  } }
+
+  <app-paginatior></app-paginatior>
 </ul>
-<app-paginatior></app-paginatior>
