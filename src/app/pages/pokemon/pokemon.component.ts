@@ -20,5 +20,7 @@ export class PokemonComponent {
     this.pokemonService.getPokemonInfo(id).subscribe((data) => {
       this.pokemon = data
     })
+    // clear the search input when we navigate to the pokemon page
+    this.pokemonService.searchControl.setValue(null)
   }
 }

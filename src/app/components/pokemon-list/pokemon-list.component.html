@@ -1,8 +1,9 @@
 <ul>
   @if(isLoading | async){
-  <mat-spinner></mat-spinner>
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
   }@else { @for(pokemon of pokemonWithInfo; track pokemon.id){
-
   <li [routerLink]="['/pokemon/', pokemon.id]">
     <span class="pokemonName">{{ pokemon.name }}</span>
     <span>

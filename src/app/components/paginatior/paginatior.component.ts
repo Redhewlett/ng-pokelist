@@ -14,7 +14,7 @@ export class PaginatiorComponent {
   public totalPokemons$ = this.pokemonService.pokemonResources$.pipe(
     map((res) => res.count)
   );
-  constructor(private pokemonService: PokemonService) {}
+  constructor(public pokemonService: PokemonService) {}
 
   onPageChange(event: any) {
     this.pokemonService.updatePokemonResources(
