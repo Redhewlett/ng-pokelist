@@ -5,7 +5,7 @@ ul {
   grid-template-rows: repeat(5, 1fr);
   justify-items: center;
   align-items: center;
-  padding-block: 1rem;
+  padding-block: 1rem 4rem;
   gap: 0rem;
   & li {
     width: 300px;
@@ -16,14 +16,21 @@ ul {
     margin: 10px 0;
     border: 1px solid lightblue;
     border-radius: 5px;
-    &:hover{
+    &:hover {
       background-color: lightblue;
       cursor: pointer;
       transition: all ease-in-out 0.3s;
     }
   }
 }
-.pokemonName{
+.pokemonName {
   font-size: 1.5rem;
   font-weight: 500;
+}
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }

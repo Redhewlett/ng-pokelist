@@ -1,0 +1,12 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Search your a pokemon</mat-label>
+    <input
+      type="text"
+      placeholder="Enter a pokemon name"
+      aria-label="Pokemon"
+      matInput
+      [formControl]="this.pokemonService.searchControl"
+    />
+  </mat-form-field>
+</form>

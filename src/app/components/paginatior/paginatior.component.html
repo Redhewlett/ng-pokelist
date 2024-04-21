@@ -2,5 +2,6 @@
   [length]="totalPokemons$ | async"
   [pageSize]="20"
   (page)='onPageChange($event)'
+  [disabled]="(this.pokemonService.isLoading$ | async) || this.pokemonService.searchControl.value !== ''"
 >
 </mat-paginator>

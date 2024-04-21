@@ -1,1 +1,12 @@
-<app-pokemon-list [pokemonWithInfo]="this.pokemonService.pokemonWithInfo$ | async"></app-pokemon-list>
+<app-pokemon-search></app-pokemon-search>
+@if(!this.pokemonService.searchControl.value){
+<app-pokemon-list
+  [pokemonWithInfo]="this.pokemonService.pokemonWithInfo$ | async"
+  [isLoading]="this.pokemonService.isLoading$"
+></app-pokemon-list>
+}@else {
+<app-pokemon-list
+  [pokemonWithInfo]="this.pokemonService.filteredPokemonWithInfo$ | async"
+  [isLoading]="this.pokemonService.isLoading$"
+></app-pokemon-list>
+}
